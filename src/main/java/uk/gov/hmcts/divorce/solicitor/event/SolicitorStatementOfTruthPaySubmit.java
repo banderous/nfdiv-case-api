@@ -106,7 +106,7 @@ public class SolicitorStatementOfTruthPaySubmit implements CCDConfig<CaseData, S
                 .build();
         }
 
-        return solicitorSubmitPetitionService.aboutToSubmit(caseData, details.getId());
+        return solicitorSubmitPetitionService.aboutToSubmit(caseData, details.getId(),httpServletRequest.getHeader(AUTHORIZATION));
 
     }
 

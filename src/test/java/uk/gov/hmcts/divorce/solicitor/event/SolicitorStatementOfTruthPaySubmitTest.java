@@ -33,6 +33,7 @@ import static uk.gov.hmcts.ccd.sdk.type.YesOrNo.YES;
 import static uk.gov.hmcts.divorce.common.model.State.SOTAgreementPayAndSubmitRequired;
 import static uk.gov.hmcts.divorce.common.model.State.SolicitorAwaitingPaymentConfirmation;
 import static uk.gov.hmcts.divorce.solicitor.event.SolicitorStatementOfTruthPaySubmit.SOLICITOR_STATEMENT_OF_TRUTH_PAY_SUBMIT;
+import static uk.gov.hmcts.divorce.testutil.TestConstants.PET_SOL_AUTH_TOKEN;
 import static uk.gov.hmcts.divorce.testutil.TestConstants.TEST_ORG_NAME;
 import static uk.gov.hmcts.divorce.testutil.TestConstants.TES_ORG_ID;
 
@@ -108,7 +109,10 @@ public class SolicitorStatementOfTruthPaySubmitTest {
                 .state(SolicitorAwaitingPaymentConfirmation)
                 .build();
 
-        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId)).thenReturn(aboutToStartOrSubmitResponse);
+        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId, PET_SOL_AUTH_TOKEN))
+            .thenReturn(aboutToStartOrSubmitResponse);
+
+        when(httpServletRequest.getHeader(AUTHORIZATION)).thenReturn(PET_SOL_AUTH_TOKEN);
 
         final AboutToStartOrSubmitResponse<CaseData, State> response = solicitorStatementOfTruthPaySubmit
             .aboutToSubmit(caseDetails, new CaseDetails<>());
@@ -222,7 +226,10 @@ public class SolicitorStatementOfTruthPaySubmitTest {
                 .state(SolicitorAwaitingPaymentConfirmation)
                 .build();
 
-        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId)).thenReturn(aboutToStartOrSubmitResponse);
+        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId, PET_SOL_AUTH_TOKEN))
+            .thenReturn(aboutToStartOrSubmitResponse);
+
+        when(httpServletRequest.getHeader(AUTHORIZATION)).thenReturn(PET_SOL_AUTH_TOKEN);
 
         final AboutToStartOrSubmitResponse<CaseData, State> response = solicitorStatementOfTruthPaySubmit
             .aboutToSubmit(caseDetails, new CaseDetails<>());
@@ -261,7 +268,10 @@ public class SolicitorStatementOfTruthPaySubmitTest {
                 .state(SolicitorAwaitingPaymentConfirmation)
                 .build();
 
-        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId)).thenReturn(aboutToStartOrSubmitResponse);
+        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId, PET_SOL_AUTH_TOKEN))
+            .thenReturn(aboutToStartOrSubmitResponse);
+
+        when(httpServletRequest.getHeader(AUTHORIZATION)).thenReturn(PET_SOL_AUTH_TOKEN);
 
         final AboutToStartOrSubmitResponse<CaseData, State> response = solicitorStatementOfTruthPaySubmit
             .aboutToSubmit(caseDetails, new CaseDetails<>());
@@ -291,7 +301,10 @@ public class SolicitorStatementOfTruthPaySubmitTest {
                 .state(SolicitorAwaitingPaymentConfirmation)
                 .build();
 
-        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId)).thenReturn(aboutToStartOrSubmitResponse);
+        when(solicitorSubmitPetitionService.aboutToSubmit(caseData, caseId, PET_SOL_AUTH_TOKEN))
+            .thenReturn(aboutToStartOrSubmitResponse);
+
+        when(httpServletRequest.getHeader(AUTHORIZATION)).thenReturn(PET_SOL_AUTH_TOKEN);
 
         final AboutToStartOrSubmitResponse<CaseData, State> response = solicitorStatementOfTruthPaySubmit
             .aboutToSubmit(caseDetails, new CaseDetails<>());
