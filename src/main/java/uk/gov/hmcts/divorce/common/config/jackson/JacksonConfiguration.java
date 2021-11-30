@@ -16,10 +16,8 @@ import static com.fasterxml.jackson.databind.MapperFeature.INFER_BUILDER_TYPE_BI
 @Configuration
 public class JacksonConfiguration {
 
-    @Primary
     @Bean
-    public ObjectMapper getMapper() {
-        ObjectMapper mapper = new ObjectMapper();
+    public ObjectMapper getMapper(ObjectMapper mapper) {
         mapper.configure(ACCEPT_CASE_INSENSITIVE_ENUMS, true);
         mapper.enable(INFER_BUILDER_TYPE_BINDINGS);
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);

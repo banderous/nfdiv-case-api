@@ -6,8 +6,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import uk.gov.hmcts.ccd.definition.store.CaseDataAPIApplication;
+import uk.gov.hmcts.ccd.sdk.generator.JSONConfigGenerator;
 import uk.gov.hmcts.divorce.document.DocAssemblyClient;
 import uk.gov.hmcts.divorce.document.DocumentManagementClient;
 import uk.gov.hmcts.divorce.payment.FeesAndPaymentsClient;
@@ -44,6 +49,16 @@ import javax.annotation.PostConstruct;
         PaymentPbaClient.class
     }
 )
+@PropertySource(value = {
+    "classpath:definitionstore/application.properties",
+    "classpath:datastore/application.properties",
+    "classpath:userprofile/application.properties",
+})
+@ComponentScan( excludeFilters = {
+    @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {
+        JSONConfigGenerator.class
+    })
+})
 @EnableScheduling
 @EnableRetry
 @SuppressWarnings("HideUtilityClassConstructor") // Spring needs a constructor, its not a utility class

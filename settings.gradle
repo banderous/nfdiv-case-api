@@ -6,4 +6,5 @@ pluginManagement {
     }
 }
 
+includeBuild('../rse-cft-lib')
 rootProject.name = 'nfdiv-case-api'

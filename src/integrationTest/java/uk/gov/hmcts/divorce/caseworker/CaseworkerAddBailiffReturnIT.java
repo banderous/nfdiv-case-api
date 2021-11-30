@@ -50,8 +50,8 @@ public class CaseworkerAddBailiffReturnIT {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
-    private AuthTokenGenerator serviceTokenGenerator;
+//    @MockBean
+//    private AuthTokenGenerator serviceTokenGenerator;
 
     @MockBean
     private WebMvcConfig webMvcConfig;

@@ -299,6 +299,7 @@ dependencies {
 
   testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
 
+  implementation 'rse-cft-lib:ccd-lib'
   integrationTestImplementation sourceSets.main.runtimeClasspath
   integrationTestImplementation sourceSets.test.runtimeClasspath
 
