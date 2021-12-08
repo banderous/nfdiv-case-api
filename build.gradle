@@ -55,12 +55,21 @@ sourceSets {
       srcDir file('src/integrationTest/java')
     }
   }
+
+  ccdTest {
+    java {
+      compileClasspath += main.output
+      runtimeClasspath += main.output
+      srcDir file('src/ccdTest/java')
+    }
+  }
 }
 
 idea {
   module {
     testSourceDirs += file('src/integrationTest/java')
     testSourceDirs += file('src/functionalTest/java')
+    testSourceDirs += file('src/ccdTest/java')
   }
 }
 
@@ -69,6 +78,8 @@ configurations {
   functionalTestRuntime.extendsFrom testRuntime
   integrationTestImplementation.extendsFrom testImplementation
   integrationTestRuntime.extendsFrom testRuntime
+  ccdTestImplementation.extendsFrom testImplementation
+  ccdTestRuntime.extendsFrom testRuntime
 }
 
 tasks.withType(JavaCompile) {
@@ -102,6 +113,20 @@ task integration(type: Test) {
   classpath = sourceSets.integrationTest.runtimeClasspath
   failFast = true
 }
+
+task buildCCDXlsx(type: Exec, dependsOn: generateCCDConfig) {
+  group 'ccd tasks'
+  commandLine './bin/ccd-build-definition.sh'
+}
+
+task ccdTest(type: Test, dependsOn: buildCCDXlsx) {
+  description = "Runs ccd tests"
+  group = "Verification"
+  testClassesDirs = sourceSets.ccdTest.output.classesDirs
+  classpath = sourceSets.ccdTest.runtimeClasspath
+  failFast = true
+}
+check.dependsOn ccdTest
 
 task smoke(type: Test) {
   description = "Runs Smoke Tests"
@@ -191,6 +216,10 @@ dependencyManagement {
     dependencySet(group: 'com.google.guava', version: '31.0.1-jre') {
       entry 'guava'
     }
+  }
+  // TODO - fix in the CFT lib by publishing platform information.
+  imports {
+    mavenBom 'com.fasterxml.jackson:jackson-bom:2.12.4'
   }
 }
 
@@ -303,8 +332,15 @@ dependencies {
 
   functionalTestImplementation sourceSets.main.runtimeClasspath
   functionalTestImplementation sourceSets.test.runtimeClasspath
+
+  ccdTestImplementation sourceSets.main.runtimeClasspath
+  ccdTestImplementation sourceSets.test.runtimeClasspath
+
   functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'document-management-client', version: '7.0.0'
   functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: versions.s2sClient
+
+  ccdTestImplementation 'com.github.hmcts:rse-cft-lib:0.1.0'
+  ccdTestImplementation 'org.springframework.security:spring-security-test'
 }
 
 mainClassName = 'uk.gov.hmcts.divorce.CaseApiApplication'
@@ -434,3 +470,4 @@ reloadCcd.configure {
 }
 
 generateCCDConfig.dependsOn stopCaseApiContainer
+
