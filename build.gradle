@@ -339,7 +339,7 @@ dependencies {
   functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'document-management-client', version: '7.0.0'
   functionalTestImplementation group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: versions.s2sClient
 
-  ccdTestImplementation 'com.github.hmcts:rse-cft-lib:0.1.0'
+  ccdTestImplementation 'com.github.hmcts:rse-cft-lib:0.15.75'
   ccdTestImplementation 'org.springframework.security:spring-security-test'
 }
 
