@@ -1,6 +1,7 @@
 package uk.gov.hmcts.divorce.cftlib;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -81,8 +82,11 @@ public class CftLibConfig implements CFTLibConfigurer {
     private void generateCCDDefinition() throws Exception {
         // Export the JSON config.
         configWriter.generateAllCaseTypesToJSON(new File("build/definitions"));
+        var gradle = SystemUtils.IS_OS_WINDOWS
+            ? "gradlew.bat"
+            : "./gradlew";
         // Run the gradle task to convert to xlsx.
-        var code = new ProcessBuilder("bash", "gradlew", "buildCCDXlsx")
+        var code = new ProcessBuilder(gradle, "buildCCDXlsx")
             .inheritIO()
             .start()
             .waitFor();
