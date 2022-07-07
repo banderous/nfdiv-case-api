@@ -82,7 +82,7 @@ public class CftLibConfig implements CFTLibConfigurer {
         // Export the JSON config.
         configWriter.generateAllCaseTypesToJSON(new File("build/definitions"));
         // Run the gradle task to convert to xlsx.
-        var code = new ProcessBuilder("./gradlew", "buildCCDXlsx")
+        var code = new ProcessBuilder("bash", "gradlew", "buildCCDXlsx")
             .inheritIO()
             .start()
             .waitFor();
